@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mywebsite?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 297710
+  data:
+      redis:
+      host: localhost
+      port: 6379
+  servlet:
+    multipart:
+      max-file-size: 100MB
+
+mybatis:
+  type-aliases-package: siwenyu.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+

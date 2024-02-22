@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="siwenyu.mapper.VideoMapper">
+
+    <insert id="upload" parameterType="map">
+        insert into video(id,user_id,video_url,cover_url,title, description,created_at,updated_at, deleted_at)
+        VALUES (#{id},#{user_id},#{video_url},#{cover_url},#{title},#{description},now(),now(),now())
+    </insert>
+
+    <select id="search" resultType="siwenyu.pojo.Video">
+        select * from video where title like "%"#{keywords}"%"
+        <if test="fromDate != null">
+            and created_at &gt;= #{fromDate}
+        </if>
+        <if test="toDate != null">
+            and created_at &lt;= #{toDate}
+        </if>
+
+    </select>
+
+</mapper>
