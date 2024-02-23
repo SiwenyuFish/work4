@@ -2,6 +2,7 @@ package siwenyu.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import siwenyu.pojo.Video;
 
@@ -18,4 +19,10 @@ public interface VideoMapper {
 
     List<Video> search(String keywords, String fromDate, String toDate);
 
+
+    @Update("update video set like_count=like_count+1 where id =#{id}")
+    void actionLike(String id);
+
+    @Update("update video set like_count=like_count-1 where id =#{id}")
+    void actionDislike(String id);
 }

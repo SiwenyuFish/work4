@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import siwenyu.mapper.UserMapper;
 import siwenyu.mapper.VideoMapper;
 import siwenyu.pojo.PageBean;
 import siwenyu.pojo.Video;
@@ -59,6 +58,11 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public List<Video> popular(Integer pageNum, Integer pageSize) {
+       return null;
+    }
+
+    @Override
     public PageBean<Video> search(String keywords, Integer pageNum, Integer pageSize, String fromDate, String toDate) {
         PageBean<Video> pb =new PageBean<>();
 
@@ -73,5 +77,15 @@ public class VideoServiceImpl implements VideoService {
         pb.setItems(videoPage.getResult());
 
         return pb;
+    }
+
+    @Override
+    public void action(String id, Integer actionType) {
+        if(actionType==1)
+        {
+            videoMapper.actionLike(id);
+        }else {
+            videoMapper.actionDislike(id);
+        }
     }
 }

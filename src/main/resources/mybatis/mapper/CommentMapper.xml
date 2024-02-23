@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="siwenyu.mapper.CommentMapper">
+
+    <select id="list" resultType="siwenyu.pojo.Comment">
+        select * from comment
+        <where>
+            <if test="videoId!=null">
+                video_id = #{videoId}
+            </if>
+            <if test="commentId!=null">
+                and parent_id = #{commentId}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

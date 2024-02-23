@@ -12,6 +12,8 @@ import siwenyu.service.VideoService;
 import siwenyu.utils.AliOssUtil;
 import siwenyu.utils.SnowFlakeUtil;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/video")
@@ -44,6 +46,12 @@ public class VideoController {
     public Result<PageBean<Video>> list(Long userId, Integer pageNum, Integer pageSize) {
         PageBean<Video> pb = videoService.list(userId, pageNum, pageSize);
         return Result.success(pb);
+    }
+
+    @GetMapping("/popular")
+    public Result<List<Video>> popular(Integer pageNum, Integer pageSize ){
+        List<Video> videos = videoService.popular(pageNum,pageSize);
+        return Result.success(videos);
     }
 
     @PostMapping("/search")
