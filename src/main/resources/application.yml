@@ -5,9 +5,10 @@ spring:
     username: root
     password: 297710
   data:
-      redis:
+    redis:
       host: localhost
       port: 6379
+      password: 123456
   servlet:
     multipart:
       max-file-size: 100MB

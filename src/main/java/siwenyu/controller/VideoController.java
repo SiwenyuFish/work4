@@ -1,6 +1,8 @@
 package siwenyu.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import siwenyu.pojo.PageBean;
@@ -10,12 +12,18 @@ import siwenyu.service.VideoService;
 import siwenyu.utils.AliOssUtil;
 import siwenyu.utils.SnowFlakeUtil;
 
+
 @RestController
 @RequestMapping("/video")
 public class VideoController {
 
     @Autowired
     private VideoService videoService;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate redisTemplate;
+
 
     @PostMapping("/upload")
     public Result<String> upload(MultipartFile file, @RequestParam(required = false) String title, @RequestParam(required = false) String description) throws Exception {
@@ -42,6 +50,7 @@ public class VideoController {
     public Result<PageBean<Video>> search(String keywords,Integer pageNum,Integer pageSize,
     @RequestParam(required = false) String fromDate,@RequestParam(required = false) String toDate){
         PageBean<Video> pb = videoService.search(keywords,pageNum,pageSize,fromDate,toDate);
+        redisTemplate.opsForValue().set("搜索记录"+SnowFlakeUtil.getSnowFlakeId(),pb);
         return Result.success(pb);
     }
 
