@@ -11,4 +11,7 @@ public interface CommentService {
     PagePojo<Comment> list(Long videoId, Long commentId);
 
     void delete(Long videoId, Long commentId);
+
+
+    void action(String id, Integer actionType);
 }

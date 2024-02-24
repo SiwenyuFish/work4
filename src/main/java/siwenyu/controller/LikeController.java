@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import siwenyu.pojo.PagePojo;
 import siwenyu.pojo.Result;
 import siwenyu.pojo.Video;
+import siwenyu.service.CommentService;
 import siwenyu.service.LikeService;
 import siwenyu.service.VideoService;
 import siwenyu.utils.ThreadLocalUtil;
@@ -25,6 +26,9 @@ public class LikeController {
     private VideoService videoService;
 
     @Autowired
+    private CommentService commentService;
+
+    @Autowired
     private LikeService likeService;
 
     @PostMapping("/action")
@@ -34,7 +38,7 @@ public class LikeController {
                 return actionVideoLike(videoId, actionType);
             }
             if(commentId!=null){
-                return actionVideoLike(commentId,actionType);
+                return actionCommentLike(commentId,actionType);
             }
             else {
                 return Result.error("至少有一个参数为非空");
@@ -44,7 +48,7 @@ public class LikeController {
                 return actionVideoDislike(videoId, actionType);
             }
             if(commentId!=null){
-                return actionVideoDislike(commentId,actionType);
+                return actionCommentDislike(commentId,actionType);
             }
             else {
                 return Result.error("至少有一个参数为非空");
@@ -76,6 +80,34 @@ public class LikeController {
         if(result>0) {
             videoService.action(id, actionType);
             likeService.videoAction(id,userId,actionType);
+            return Result.success("取消点赞成功");
+        }else {
+            return Result.error("未进行点赞");
+        }
+    }
+
+    public Result actionCommentLike(String id,Integer actionType){
+        Map<String,Object> map1 = ThreadLocalUtil.get();
+        Long userId = (Long) map1.get("id");
+        String key=userId+"commentLike:"+id;
+        long result = redisTemplate.opsForSet().add(key,id);
+        if(result>0) {
+            commentService.action(id,actionType);
+            likeService.commentAction(id,userId,actionType);
+            return Result.success("点赞成功");
+        }else {
+            return Result.error("不能重复点赞");
+        }
+    }
+
+    public Result actionCommentDislike(String id,Integer actionType){
+        Map<String,Object> map1 = ThreadLocalUtil.get();
+        Long userId = (Long) map1.get("id");
+        String key=userId+"commentLike:"+id;
+        long result = redisTemplate.opsForSet().remove(key,id);
+        if(result>0) {
+            commentService.action(id, actionType);
+            likeService.commentAction(id,userId,actionType);
             return Result.success("取消点赞成功");
         }else {
             return Result.error("未进行点赞");

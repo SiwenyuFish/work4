@@ -2,6 +2,7 @@ package siwenyu.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import siwenyu.pojo.Comment;
 
@@ -19,4 +20,10 @@ public interface CommentMapper {
     List<Comment> list(Long videoId, Long commentId);
 
     void delete(Long videoId, Long commentId);
+
+    @Update("update comment set like_count=like_count+1 where id = #{id}")
+    void actionLike(String id);
+
+    @Update("update comment set like_count=like_count-1 where id = #{id}")
+    void actionDislike(String id);
 }

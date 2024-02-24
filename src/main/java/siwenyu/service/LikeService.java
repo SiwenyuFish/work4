@@ -8,4 +8,7 @@ public interface LikeService {
 
     PagePojo<Video> list(Long userId, Integer pageNum, Integer pageSize);
     PagePojo<Video> list(Long userId);
+
+
+    void commentAction(String id, Long userId, Integer actionType);
 }

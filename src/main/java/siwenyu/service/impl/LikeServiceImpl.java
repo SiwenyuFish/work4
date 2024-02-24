@@ -31,6 +31,16 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
+    public void commentAction(String id, Long userId, Integer actionType) {
+        if(actionType==1){
+            likeMapper.actionCommentLike(id,userId);
+        }
+        else {
+            likeMapper.actionCommentDislike(id,userId);
+        }
+    }
+
+    @Override
     public PagePojo<Video> list(Long userId, Integer pageNum, Integer pageSize) {
         PagePojo<Video> pp =new PagePojo<>();
 

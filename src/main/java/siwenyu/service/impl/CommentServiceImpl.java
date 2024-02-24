@@ -21,6 +21,16 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Override
+    public void action(String id, Integer actionType) {
+        if(actionType==1)
+        {
+            commentMapper.actionLike(id);
+        }else {
+            commentMapper.actionDislike(id);
+        }
+    }
+
+    @Override
     public void publish(Long videoId, Long commentId, String content) {
         Long id = SnowFlakeUtil.getSnowFlakeId();
         Map<String,Object> map = ThreadLocalUtil.get();

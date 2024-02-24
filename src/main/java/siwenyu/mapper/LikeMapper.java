@@ -24,4 +24,10 @@ public interface LikeMapper {
            ",comment_count,created_at,updated_at,deleted_at from video v inner join `like` l " +
            "on v.id = l.video_id where l.user_id=#{userId}")
     List<Video> list(Long userId);
+
+   @Insert("insert into `like`(user_id,comment_id)values (#{userId},#{id})")
+    void actionCommentLike(String id, Long userId);
+
+   @Delete("delete from `like` where user_id=#{userId} and comment_id=#{id}")
+    void actionCommentDislike(String id, Long userId);
 }
