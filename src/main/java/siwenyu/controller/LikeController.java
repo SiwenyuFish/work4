@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import siwenyu.pojo.PageBean;
 import siwenyu.pojo.PagePojo;
 import siwenyu.pojo.Result;
 import siwenyu.pojo.Video;
@@ -56,11 +55,11 @@ public class LikeController {
     }
 
     public Result actionVideoLike(String id,Integer actionType){
-        String key="like:"+id;
+        Map<String,Object> map1 = ThreadLocalUtil.get();
+        Long userId = (Long) map1.get("id");
+        String key=userId+"like:"+id;
         long result = redisTemplate.opsForSet().add(key,id);
         if(result>0) {
-            Map<String,Object> map = ThreadLocalUtil.get();
-            Long userId= (Long) map.get("id");
             videoService.action(id,actionType);
             likeService.videoAction(id,userId,actionType);
             return Result.success("点赞成功");
@@ -70,11 +69,11 @@ public class LikeController {
     }
 
     public Result actionVideoDislike(String id,Integer actionType){
-        String key="like:"+id;
+        Map<String,Object> map1 = ThreadLocalUtil.get();
+        Long userId = (Long) map1.get("id");
+        String key=userId+"like:"+id;
         long result = redisTemplate.opsForSet().remove(key,id);
         if(result>0) {
-            Map<String,Object> map = ThreadLocalUtil.get();
-            Long userId= (Long) map.get("id");
             videoService.action(id, actionType);
             likeService.videoAction(id,userId,actionType);
             return Result.success("取消点赞成功");

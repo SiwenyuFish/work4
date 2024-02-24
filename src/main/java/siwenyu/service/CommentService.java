@@ -9,4 +9,6 @@ public interface CommentService {
     PagePojo<Comment> list(Long videoId, Long commentId, Integer pageNum, Integer pageSize);
 
     PagePojo<Comment> list(Long videoId, Long commentId);
+
+    void delete(Long videoId, Long commentId);
 }

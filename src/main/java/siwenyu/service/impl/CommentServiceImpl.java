@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import siwenyu.mapper.CommentMapper;
 import siwenyu.pojo.Comment;
 import siwenyu.pojo.PagePojo;
-import siwenyu.pojo.Video;
 import siwenyu.service.CommentService;
 import siwenyu.utils.SnowFlakeUtil;
 import siwenyu.utils.ThreadLocalUtil;
@@ -49,5 +48,10 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments=commentMapper.list(videoId,commentId);
         pp.setItems(comments);
         return pp;
+    }
+
+    @Override
+    public void delete(Long videoId, Long commentId) {
+        commentMapper.delete(videoId,commentId);
     }
 }

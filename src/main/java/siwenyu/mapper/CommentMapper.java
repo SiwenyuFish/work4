@@ -17,4 +17,6 @@ public interface CommentMapper {
 
 
     List<Comment> list(Long videoId, Long commentId);
+
+    void delete(Long videoId, Long commentId);
 }
