@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import siwenyu.pojo.Friend;
 import siwenyu.pojo.PageBean;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Result;
 import siwenyu.service.RelationService;
 import siwenyu.utils.ThreadLocalUtil;
@@ -79,8 +79,8 @@ public class RelationController {
         return Result.success(friendPageBean);
     }
 
-    public Result<PagePojo<Friend>> followingListNoPage(Long userId){
-        PagePojo<Friend> friendPagePojo = relationService.list(userId);
+    public Result<MyPageBean<Friend>> followingListNoPage(Long userId){
+        MyPageBean<Friend> friendPagePojo = relationService.list(userId);
         return Result.success(friendPagePojo);
     }
 
@@ -99,8 +99,8 @@ public class RelationController {
         return Result.success(friendPageBean);
     }
 
-    public Result<PagePojo<Friend>> followerListNoPage(Long userId){
-        PagePojo<Friend> friendPagePojo = relationService.fanslist(userId);
+    public Result<MyPageBean<Friend>> followerListNoPage(Long userId){
+        MyPageBean<Friend> friendPagePojo = relationService.fanslist(userId);
         return Result.success(friendPagePojo);
     }
 
@@ -121,8 +121,8 @@ public class RelationController {
         return Result.success(friendPageBean);
     }
 
-    public Result<PagePojo<Friend>> friendsListNoPage(Long userId){
-        PagePojo<Friend> friendPagePojo = relationService.friendslist(userId);
+    public Result<MyPageBean<Friend>> friendsListNoPage(Long userId){
+        MyPageBean<Friend> friendPagePojo = relationService.friendslist(userId);
         return Result.success(friendPagePojo);
     }
 

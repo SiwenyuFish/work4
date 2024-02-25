@@ -5,9 +5,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import siwenyu.mapper.LikeMapper;
-import siwenyu.mapper.VideoMapper;
-import siwenyu.pojo.PageBean;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Video;
 import siwenyu.service.LikeService;
 
@@ -41,8 +39,8 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public PagePojo<Video> list(Long userId, Integer pageNum, Integer pageSize) {
-        PagePojo<Video> pp =new PagePojo<>();
+    public MyPageBean<Video> list(Long userId, Integer pageNum, Integer pageSize) {
+        MyPageBean<Video> pp =new MyPageBean<>();
 
         PageHelper.startPage(pageNum,pageSize);
 
@@ -54,8 +52,8 @@ public class LikeServiceImpl implements LikeService {
         return pp;
     }
     @Override
-    public PagePojo<Video> list(Long userId){
-        PagePojo<Video> pp =new PagePojo<>();
+    public MyPageBean<Video> list(Long userId){
+        MyPageBean<Video> pp =new MyPageBean<>();
         List<Video> videos=likeMapper.list(userId);
         pp.setItems(videos);
         return pp;

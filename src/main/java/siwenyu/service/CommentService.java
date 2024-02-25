@@ -1,14 +1,14 @@
 package siwenyu.service;
 
 import siwenyu.pojo.Comment;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 
 public interface CommentService {
     void publish(Long videoId, Long commentId, String content);
 
-    PagePojo<Comment> list(Long videoId, Long commentId, Integer pageNum, Integer pageSize);
+    MyPageBean<Comment> list(Long videoId, Long commentId, Integer pageNum, Integer pageSize);
 
-    PagePojo<Comment> list(Long videoId, Long commentId);
+    MyPageBean<Comment> list(Long videoId, Long commentId);
 
     void delete(Long videoId, Long commentId);
 

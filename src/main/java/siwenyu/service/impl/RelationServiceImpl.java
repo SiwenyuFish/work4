@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import siwenyu.mapper.RelationMapper;
 import siwenyu.pojo.Friend;
 import siwenyu.pojo.PageBean;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 import siwenyu.service.RelationService;
 
 import java.util.List;
@@ -44,8 +44,8 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public PagePojo<Friend> list(Long userId) {
-        PagePojo<Friend> pp=new PagePojo<>();
+    public MyPageBean<Friend> list(Long userId) {
+        MyPageBean<Friend> pp=new MyPageBean<>();
         List<Friend>friends=relationMapper.list(userId);
 
         pp.setItems(friends);
@@ -69,8 +69,8 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public PagePojo<Friend> fanslist(Long userId) {
-        PagePojo<Friend> pp=new PagePojo<>();
+    public MyPageBean<Friend> fanslist(Long userId) {
+        MyPageBean<Friend> pp=new MyPageBean<>();
         List<Friend>friends=relationMapper.fanslist(userId);
 
         pp.setItems(friends);
@@ -94,8 +94,8 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public PagePojo<Friend> friendslist(Long userId) {
-        PagePojo<Friend> pp=new PagePojo<>();
+    public MyPageBean<Friend> friendslist(Long userId) {
+        MyPageBean<Friend> pp=new MyPageBean<>();
         List<Friend>friends=relationMapper.friendslist(userId);
 
         pp.setItems(friends);

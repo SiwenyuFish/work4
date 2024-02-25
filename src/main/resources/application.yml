@@ -13,10 +13,11 @@ spring:
     multipart:
       max-file-size: 100MB
 
+
 mybatis:
   type-aliases-package: siwenyu.pojo
   mapper-locations: classpath:mybatis/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
-
+debug: true
 

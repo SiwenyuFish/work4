@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import siwenyu.mapper.CommentMapper;
 import siwenyu.pojo.Comment;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 import siwenyu.service.CommentService;
 import siwenyu.utils.SnowFlakeUtil;
 import siwenyu.utils.ThreadLocalUtil;
@@ -39,8 +39,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PagePojo<Comment> list(Long videoId, Long commentId, Integer pageNum, Integer pageSize) {
-        PagePojo<Comment> pp =new PagePojo<>();
+    public MyPageBean<Comment> list(Long videoId, Long commentId, Integer pageNum, Integer pageSize) {
+        MyPageBean<Comment> pp =new MyPageBean<>();
 
         PageHelper.startPage(pageNum,pageSize);
 
@@ -53,8 +53,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PagePojo<Comment> list(Long videoId, Long commentId) {
-        PagePojo<Comment> pp =new PagePojo<>();
+    public MyPageBean<Comment> list(Long videoId, Long commentId) {
+        MyPageBean<Comment> pp =new MyPageBean<>();
         List<Comment> comments=commentMapper.list(videoId,commentId);
         pp.setItems(comments);
         return pp;

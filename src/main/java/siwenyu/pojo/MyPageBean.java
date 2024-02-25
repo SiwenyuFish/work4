@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PagePojo<T> {
+public class MyPageBean<T> {
     private List<T> items;
 }

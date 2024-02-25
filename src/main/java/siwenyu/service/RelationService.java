@@ -1,9 +1,8 @@
 package siwenyu.service;
 
-import org.apache.ibatis.annotations.Select;
 import siwenyu.pojo.Friend;
 import siwenyu.pojo.PageBean;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 
 public interface RelationService {
     void action( Long id,Long userId, Integer actionType);
@@ -11,14 +10,14 @@ public interface RelationService {
     PageBean<Friend> list(Long userId, Integer pageNum, Integer pageSize);
 
 
-    PagePojo<Friend> list(Long userId);
+    MyPageBean<Friend> list(Long userId);
 
 
     PageBean<Friend> fanslist(Long userId, Integer pageNum, Integer pageSize);
 
-    PagePojo<Friend> fanslist(Long userId);
+    MyPageBean<Friend> fanslist(Long userId);
 
     PageBean<Friend> friendslist(Long userId, Integer pageNum, Integer pageSize);
 
-    PagePojo<Friend> friendslist(Long userId);
+    MyPageBean<Friend> friendslist(Long userId);
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import siwenyu.pojo.PagePojo;
+import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Result;
 import siwenyu.pojo.Video;
 import siwenyu.service.CommentService;
@@ -130,12 +130,12 @@ public class LikeController {
     }
 
     @GetMapping("/list")
-    public Result<PagePojo<Video>> list(Long userId,@RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
+    public Result<MyPageBean<Video>> list(Long userId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
         if(pageNum!=null&&pageSize!=null) {
-            PagePojo<Video> pp = likeService.list(userId, pageNum, pageSize);
+            MyPageBean<Video> pp = likeService.list(userId, pageNum, pageSize);
             return Result.success(pp);
         }else {
-            PagePojo<Video> pp = likeService.list(userId);
+            MyPageBean<Video> pp = likeService.list(userId);
             return Result.success(pp);
         }
     }
