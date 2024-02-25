@@ -1,12 +1,13 @@
 # work4
-
+# Bonus
+# 使用阿里云oss存储投稿的视频文件
 # [接口文档](https://apifox.com/apidoc/shared-6c1bc6c1-6281-461f-a5b5-64a326928391/api-149143987)
 # 项目结构
 
     │  .gitignore
     │  pom.xml
     │  README.md
-    │  
+    │
     ├─.idea
     │  │  .gitignore
     │  │  compiler.xml
@@ -34,6 +35,11 @@
     │                          mywebsite.b1mLgw.meta
     │                          performance_schema.kIw0nw.meta
     │                          sys.zb4BAA.meta
+    │
+    ├─logs
+    │      spring.application.name_IS_UNDEFINED_debug.log
+    │      spring.application.name_IS_UNDEFINED_error.log
+    │      spring.application.name_IS_UNDEFINED_info.log
     │
     ├─src
     │  ├─main
@@ -69,8 +75,8 @@
     │  │  │      │      Comment.java
     │  │  │      │      Friend.java
     │  │  │      │      Like.java
+    │  │  │      │      MyPageBean.java
     │  │  │      │      PageBean.java
-    │  │  │      │      PagePojo.java
     │  │  │      │      Relation.java
     │  │  │      │      Result.java
     │  │  │      │      User.java
@@ -98,6 +104,7 @@
     │  │  │
     │  │  └─resources
     │  │      │  application.yml
+    │  │      │  logback-spring.xml
     │  │      │
     │  │      ├─mybatis
     │  │      │  └─mapper
@@ -115,6 +122,7 @@
     └─target
         ├─classes
         │  │  application.yml
+        │  │  logback-spring.xml
         │  │
         │  ├─mybatis
         │  │  └─mapper
@@ -153,8 +161,8 @@
         │      │      Comment.class
         │      │      Friend.class
         │      │      Like.class
+        │      │      MyPageBean.class
         │      │      PageBean.class
-        │      │      PagePojo.class
         │      │      Relation.class
         │      │      Result.class
         │      │      User.class
@@ -187,3 +195,4 @@
         └─test-classes
             └─siwenyu
                     Demo10ApplicationTests.class
+    
