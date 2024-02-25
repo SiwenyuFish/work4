@@ -4,6 +4,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import siwenyu.pojo.Result;
 
+/**
+ * 操作失败
+ */
 @RestControllerAdvice
 public class ExceptionHandler {
 

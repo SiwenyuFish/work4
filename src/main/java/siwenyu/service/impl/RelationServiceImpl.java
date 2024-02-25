@@ -18,6 +18,9 @@ public class RelationServiceImpl implements RelationService {
     @Autowired
     private RelationMapper relationMapper;
 
+    /**
+     * 实现用户关注的操作 数据保存到relation表
+     */
     @Override
     public void action( Long id,Long userId, Integer actionType) {
         if(actionType==0){
@@ -27,6 +30,9 @@ public class RelationServiceImpl implements RelationService {
         }
     }
 
+    /**
+     * 实现分页查询指定用户的关注列表
+     */
     @Override
     public PageBean<Friend> list(Long userId, Integer pageNum, Integer pageSize) {
         PageBean<Friend> pb = new PageBean<>();
@@ -43,6 +49,9 @@ public class RelationServiceImpl implements RelationService {
         return pb;
     }
 
+    /**
+     * 实现查询指定用户的关注列表
+     */
     @Override
     public MyPageBean<Friend> list(Long userId) {
         MyPageBean<Friend> pp=new MyPageBean<>();
@@ -52,6 +61,9 @@ public class RelationServiceImpl implements RelationService {
         return pp;
     }
 
+    /**
+     * 实现分页查询指定用户的粉丝列表
+     */
     @Override
     public PageBean<Friend> fanslist(Long userId, Integer pageNum, Integer pageSize) {
         PageBean<Friend> pb = new PageBean<>();
@@ -68,6 +80,9 @@ public class RelationServiceImpl implements RelationService {
         return pb;
     }
 
+    /**
+     * 实现查询指定用户的粉丝列表
+     */
     @Override
     public MyPageBean<Friend> fanslist(Long userId) {
         MyPageBean<Friend> pp=new MyPageBean<>();
@@ -77,6 +92,9 @@ public class RelationServiceImpl implements RelationService {
         return pp;
     }
 
+    /**
+     * 实现分页查询指定用户的好友列表
+     */
     @Override
     public PageBean<Friend> friendslist(Long userId, Integer pageNum, Integer pageSize) {
         PageBean<Friend> pb = new PageBean<>();
@@ -93,6 +111,9 @@ public class RelationServiceImpl implements RelationService {
         return pb;
     }
 
+    /**
+     * 实现查询指定用户的好友列表
+     */
     @Override
     public MyPageBean<Friend> friendslist(Long userId) {
         MyPageBean<Friend> pp=new MyPageBean<>();

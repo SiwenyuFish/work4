@@ -10,9 +10,15 @@ import siwenyu.utils.ThreadLocalUtil;
 
 import java.util.Map;
 
+/**
+ * 登录拦截器
+ */
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
+    /**
+     * 必须用令牌才能进行除用户注册和用户登录的其他操作
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //令牌验证

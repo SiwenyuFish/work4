@@ -17,7 +17,9 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private LikeMapper likeMapper;
 
-
+    /**
+     * 实现给视频点赞的操作 数据保存到like表
+     */
     @Override
     public void videoAction(String id, Long userId, Integer actionType) {
         if(actionType==1){
@@ -27,6 +29,10 @@ public class LikeServiceImpl implements LikeService {
             likeMapper.actionVideoDislike(id,userId);
         }
     }
+
+    /**
+     * 实现给评论点赞的操作 数据保存到like表
+     */
 
     @Override
     public void commentAction(String id, Long userId, Integer actionType) {
@@ -38,6 +44,9 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
+    /**
+     * 分页查询指定用户点赞的视频列表
+     */
     @Override
     public MyPageBean<Video> list(Long userId, Integer pageNum, Integer pageSize) {
         MyPageBean<Video> pp =new MyPageBean<>();
@@ -51,6 +60,10 @@ public class LikeServiceImpl implements LikeService {
 
         return pp;
     }
+
+    /**
+     * 不分页查询指定用户点赞的视频列表
+     */
     @Override
     public MyPageBean<Video> list(Long userId){
         MyPageBean<Video> pp =new MyPageBean<>();

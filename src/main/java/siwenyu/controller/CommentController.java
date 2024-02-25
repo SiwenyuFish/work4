@@ -7,12 +7,18 @@ import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Result;
 import siwenyu.service.CommentService;
 
+/**
+ * 评论
+ */
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * 评论操作
+     */
     @PostMapping("/publish")
     public Result publish(@RequestParam(required = false) Long videoId, @RequestParam(required = false) Long commentId, @RequestParam(required = false) String content){
 
@@ -23,6 +29,9 @@ public class CommentController {
         return Result.error("至少有一个参数为非空");
     }
 
+    /**
+     *输出评论列表 按视频编号和评论编号查询
+     */
     @GetMapping("/list")
     public Result<MyPageBean<Comment>> list(@RequestParam(required = false) Long videoId, @RequestParam(required = false) Long commentId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize) {
         if (videoId == null && commentId == null) {
@@ -37,6 +46,9 @@ public class CommentController {
         }
     }
 
+    /**
+     *删除评论 按视频编号和评论编号查询
+     */
     @DeleteMapping("/delete")
     public Result delete(@RequestParam(required = false) Long videoId,@RequestParam(required = false) Long commentId){
         if(videoId==null&&commentId==null){

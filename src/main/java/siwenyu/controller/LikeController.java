@@ -14,6 +14,9 @@ import siwenyu.utils.ThreadLocalUtil;
 
 import java.util.Map;
 
+/**
+ * 点赞
+ */
 @RestController
 @RequestMapping("/like")
 public class LikeController {
@@ -30,6 +33,10 @@ public class LikeController {
 
     @Autowired
     private LikeService likeService;
+
+    /**
+     * 点赞操作 给视频或者评论点赞
+     */
 
     @PostMapping("/action")
     public Result action(@RequestParam(required = false) String videoId, @RequestParam(required = false) String commentId, Integer actionType){
@@ -58,6 +65,15 @@ public class LikeController {
         }
     }
 
+    /**
+     * 给视频点赞
+     * 先查询redis是否存在点赞信息，如果有，则直接返回不能重复点赞
+     * 否则将点赞信息放入redis并更新数据库
+     * 成功进行点赞操作后 点击量＋1
+     * 在redis中创建一个名为chart的ZSet 存放视频编号和点击量
+     * 在redis中创建一个名为HashVideo的Hash表 存放视频编号和视频的信息
+     */
+
     public Result actionVideoLike(String id,Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
@@ -73,6 +89,7 @@ public class LikeController {
                 result2 = redisTemplate.opsForZSet().score("chart",id);
                 redisTemplate.opsForZSet().add("chart",id,result2+1);
             } catch (Exception e) {
+                //出现异常 说明这个视频从未被点击过
                 redisTemplate.opsForZSet().add("chart",id,1);
             }finally {
                 Video video=videoService.searchById(id);
@@ -86,6 +103,12 @@ public class LikeController {
             return Result.error("不能重复点赞");
         }
     }
+
+    /**
+     * 给视频取消点赞
+     * 先查询redis是否存在点赞信息，如果没有，则直接返回未进行点赞
+     * 否则将点赞信息从redis中删除并更新数据库
+     */
 
     public Result actionVideoDislike(String id,Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
@@ -101,6 +124,11 @@ public class LikeController {
         }
     }
 
+    /**
+     * 给评论点赞
+     * 先查询redis是否存在点赞信息，如果有，则直接返回不能重复点赞
+     * 否则将点赞信息放入redis并更新数据库
+     */
     public Result actionCommentLike(String id,Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
@@ -115,6 +143,12 @@ public class LikeController {
         }
     }
 
+    /**
+     * 给评论取消点赞
+     * 先查询redis是否存在点赞信息，如果没有，则直接返回未进行点赞
+     * 否则将点赞信息从redis中删除并更新数据库
+     */
+
     public Result actionCommentDislike(String id,Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
@@ -128,6 +162,10 @@ public class LikeController {
             return Result.error("未进行点赞");
         }
     }
+
+    /**
+     * 查看指定用户的点赞列表
+     */
 
     @GetMapping("/list")
     public Result<MyPageBean<Video>> list(Long userId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
