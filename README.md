@@ -7,7 +7,7 @@
     │  .gitignore
     │  pom.xml
     │  README.md
-    │  
+    │
     ├─.idea
     │  │  .gitignore
     │  │  compiler.xml
@@ -35,6 +35,11 @@
     │                          mywebsite.b1mLgw.meta
     │                          performance_schema.kIw0nw.meta
     │                          sys.zb4BAA.meta
+    │
+    ├─logs
+    │      spring.application.name_IS_UNDEFINED_debug.log
+    │      spring.application.name_IS_UNDEFINED_error.log
+    │      spring.application.name_IS_UNDEFINED_info.log
     │
     ├─src
     │  ├─main
@@ -70,8 +75,8 @@
     │  │  │      │      Comment.java
     │  │  │      │      Friend.java
     │  │  │      │      Like.java
+    │  │  │      │      MyPageBean.java
     │  │  │      │      PageBean.java
-    │  │  │      │      PagePojo.java
     │  │  │      │      Relation.java
     │  │  │      │      Result.java
     │  │  │      │      User.java
@@ -99,6 +104,7 @@
     │  │  │
     │  │  └─resources
     │  │      │  application.yml
+    │  │      │  logback-spring.xml
     │  │      │
     │  │      ├─mybatis
     │  │      │  └─mapper
@@ -116,6 +122,7 @@
     └─target
         ├─classes
         │  │  application.yml
+        │  │  logback-spring.xml
         │  │
         │  ├─mybatis
         │  │  └─mapper
