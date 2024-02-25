@@ -57,10 +57,6 @@ public class VideoServiceImpl implements VideoService {
         return pb;
     }
 
-    @Override
-    public List<Video> popular(Integer pageNum, Integer pageSize) {
-       return null;
-    }
 
     @Override
     public PageBean<Video> search(String keywords, Integer pageNum, Integer pageSize, String fromDate, String toDate) {
@@ -87,5 +83,10 @@ public class VideoServiceImpl implements VideoService {
         }else {
             videoMapper.actionDislike(id);
         }
+    }
+
+    @Override
+    public Video searchById(String id) {
+        return videoMapper.searchById(id);
     }
 }

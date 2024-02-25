@@ -66,7 +66,22 @@ public class LikeController {
         if(result>0) {
             videoService.action(id,actionType);
             likeService.videoAction(id,userId,actionType);
-            return Result.success("点赞成功");
+            //每点赞一次点击量＋1
+
+            double result2;
+            try {
+                result2 = redisTemplate.opsForZSet().score("chart",id);
+                redisTemplate.opsForZSet().add("chart",id,result2+1);
+            } catch (Exception e) {
+                redisTemplate.opsForZSet().add("chart",id,1);
+            }finally {
+                Video video=videoService.searchById(id);
+                redisTemplate.opsForHash().put("HashVideo",id,video);
+
+                return Result.success("点赞成功");
+            }
+
+
         }else {
             return Result.error("不能重复点赞");
         }

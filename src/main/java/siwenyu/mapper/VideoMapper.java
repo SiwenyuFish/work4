@@ -20,9 +20,12 @@ public interface VideoMapper {
     List<Video> search(String keywords, String fromDate, String toDate);
 
 
-    @Update("update video set like_count=like_count+1 where id =#{id}")
+    @Update("update video set like_count=like_count+1 ,video.visit_count=video.visit_count+1 where id =#{id}")
     void actionLike(String id);
 
     @Update("update video set like_count=like_count-1 where id =#{id}")
     void actionDislike(String id);
+
+    @Select("select * from video where id=#{id}")
+    Video searchById(String id);
 }

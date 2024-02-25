@@ -13,6 +13,7 @@ import siwenyu.utils.AliOssUtil;
 import siwenyu.utils.SnowFlakeUtil;
 
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -49,9 +50,17 @@ public class VideoController {
     }
 
     @GetMapping("/popular")
-    public Result<List<Video>> popular(Integer pageNum, Integer pageSize ){
-        List<Video> videos = videoService.popular(pageNum,pageSize);
-        return Result.success(videos);
+    public Result<List<Video>> popular(@RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize ){
+        if(pageNum!=null&&pageSize!=null){
+            Set chartPage = redisTemplate.opsForZSet().reverseRange("chart", pageNum-1, pageSize);
+            List<Video> videos=redisTemplate.opsForHash().multiGet("HashVideo",chartPage);
+            return Result.success(videos);
+        }
+        else {
+            Set chart = redisTemplate.opsForZSet().reverseRange("chart", 0, -1);
+            List<Video> videos = redisTemplate.opsForHash().multiGet("HashVideo", chart);
+            return Result.success(videos);
+        }
     }
 
     @PostMapping("/search")

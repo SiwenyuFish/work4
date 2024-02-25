@@ -13,7 +13,8 @@ public interface VideoService {
 
     PageBean<Video> search(String keywords, Integer pageNum, Integer pageSize, String fromDate, String toDate);
 
-    List<Video> popular(Integer pageNum, Integer pageSize);
 
     void action(String id, Integer actionType);
+
+    Video searchById(String id);
 }
