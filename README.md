@@ -161,8 +161,8 @@
         │      │      Comment.class
         │      │      Friend.class
         │      │      Like.class
+        │      │      MyPageBean.class
         │      │      PageBean.class
-        │      │      PagePojo.class
         │      │      Relation.class
         │      │      Result.class
         │      │      User.class
@@ -195,3 +195,4 @@
         └─test-classes
             └─siwenyu
                     Demo10ApplicationTests.class
+    
