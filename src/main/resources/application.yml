@@ -1,14 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mywebsite?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://8.134.193.80:3306/website?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: 297710
+    password: 123456
   data:
     redis:
-      host: localhost
+      host: 8.134.193.80
       port: 6379
       connect-timeout: 5000
+      password: 297710
   servlet:
     multipart:
       max-file-size: 100MB

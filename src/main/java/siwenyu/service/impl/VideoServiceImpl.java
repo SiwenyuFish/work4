@@ -23,6 +23,9 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private VideoMapper videoMapper;
 
+    /**
+     * 实现视频上传
+     */
     @Override
     public void upload(String url, String title, String describe) {
         HashMap<String, Object> map=new HashMap<String,Object>();
@@ -41,6 +44,9 @@ public class VideoServiceImpl implements VideoService {
         videoMapper.upload(map);
     }
 
+    /**
+     * 实现分页查询视频列表
+     */
     @Override
     public PageBean<Video> list(Long userId, Integer pageNum, Integer pageSize) {
 
@@ -57,7 +63,9 @@ public class VideoServiceImpl implements VideoService {
         return pb;
     }
 
-
+    /**
+     * 实现关键字搜索视频列表
+     */
     @Override
     public PageBean<Video> search(String keywords, Integer pageNum, Integer pageSize, String fromDate, String toDate) {
         PageBean<Video> pb =new PageBean<>();
@@ -75,6 +83,9 @@ public class VideoServiceImpl implements VideoService {
         return pb;
     }
 
+    /**
+     * 给视频点赞
+     */
     @Override
     public void action(String id, Integer actionType) {
         if(actionType==1)
@@ -85,6 +96,9 @@ public class VideoServiceImpl implements VideoService {
         }
     }
 
+    /**
+     * 给视频取消点赞
+     */
     @Override
     public Video searchById(String id) {
         return videoMapper.searchById(id);
