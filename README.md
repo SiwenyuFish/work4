@@ -5,6 +5,7 @@
 # 项目结构
 
     │  .gitignore
+    │  Dockerfile
     │  pom.xml
     │  README.md
     │
@@ -24,7 +25,6 @@
     │  └─dataSources
     │      │  2f6569b5-b94a-4c3e-bab0-442402cb2c88.xml
     │      │  674b8423-c71d-4265-b838-b7c9eb25d6fb.xml
-    │      │  8d7d968b-8364-497d-8de2-582930902f67.xml
     │      │
     │      └─2f6569b5-b94a-4c3e-bab0-442402cb2c88
     │          └─storage_v2
@@ -37,9 +37,19 @@
     │                          sys.zb4BAA.meta
     │
     ├─logs
-    │      spring.application.name_IS_UNDEFINED_debug.log
-    │      spring.application.name_IS_UNDEFINED_error.log
-    │      spring.application.name_IS_UNDEFINED_info.log
+    │  │  spring.application.name_IS_UNDEFINED_debug.log
+    │  │  spring.application.name_IS_UNDEFINED_error.log
+    │  │  spring.application.name_IS_UNDEFINED_info.log
+    │  │
+    │  ├─debug
+    │  │      spring.application.name_IS_UNDEFINED_debug.2024-02-25.log.gz
+    │  │      spring.application.name_IS_UNDEFINED_debug.2024-02-26.log.gz
+    │  │      spring.application.name_IS_UNDEFINED_debug.2024-02-27.log.gz
+    │  │
+    │  └─info
+    │          spring.application.name_IS_UNDEFINED_info.2024-02-25.log.gz
+    │          spring.application.name_IS_UNDEFINED_info.2024-02-26.log.gz
+    │          spring.application.name_IS_UNDEFINED_info.2024-02-27.log.gz
     │
     ├─src
     │  ├─main
@@ -120,6 +130,9 @@
     │                  Demo10ApplicationTests.java
     │
     └─target
+        │  demo_10-0.0.1-SNAPSHOT.jar
+        │  demo_10-0.0.1-SNAPSHOT.jar.original
+        │
         ├─classes
         │  │  application.yml
         │  │  logback-spring.xml
@@ -192,7 +205,31 @@
         │  └─annotations
         ├─generated-test-sources
         │  └─test-annotations
+        ├─maven-archiver
+        │      pom.properties
+        │
+        ├─maven-status
+        │  └─maven-compiler-plugin
+        │      ├─compile
+        │      │  └─default-compile
+        │      │          createdFiles.lst
+        │      │          inputFiles.lst
+        │      │
+        │      └─testCompile
+        │          └─default-testCompile
+        │                  createdFiles.lst
+        │                  inputFiles.lst
+        │
+        ├─surefire-reports
+        │      2024-02-26T21-48-02_404.dumpstream
+        │      2024-02-26T22-13-34_385.dumpstream
+        │      2024-02-27T12-46-28_387.dumpstream
+        │      2024-02-28T18-44-09_241.dumpstream
+        │      siwenyu.Demo10ApplicationTests.txt
+        │      TEST-siwenyu.Demo10ApplicationTests.xml
+        │
         └─test-classes
             └─siwenyu
                     Demo10ApplicationTests.class
+    
     
