@@ -1,6 +1,6 @@
 # work4
 # Bonus
-# 使用阿里云oss存储投稿的视频文件
+# 使用阿里云oss存储投稿的视频文件和上传的头像
 # [接口文档](https://apifox.com/apidoc/shared-6c1bc6c1-6281-461f-a5b5-64a326928391/api-149143987)
 # 项目结构
 
