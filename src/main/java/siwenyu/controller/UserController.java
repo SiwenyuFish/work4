@@ -1,18 +1,20 @@
 package siwenyu.controller;
 
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import siwenyu.pojo.Result;
 import siwenyu.pojo.User;
 import siwenyu.service.UserService;
+import siwenyu.utils.AliOssUtil;
 import siwenyu.utils.JwtUtil;
-import siwenyu.utils.ThreadLocalUtil;
-
+import siwenyu.utils.SnowFlakeUtil;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 /**
  * 用户
@@ -64,16 +66,11 @@ public class UserController {
     }
 
     /**
-     * 输出用户信息 通过ThreadLocalUtil获取当前登录用户的信息
+     * 输出指定id用户信息
      */
-    @GetMapping("/userInfo")
-    public Result<User> userInfo() {
-        //根据用户名查询用户
-
-        Map<String,Object> map = ThreadLocalUtil.get();
-        String username = (String) map.get("username");
-
-        User user = userService.findByUserName(username);
+    @GetMapping("/info")
+    public Result<User> userInfo(Long userId) {
+        User user = userService.findByUserId(userId);
         return Result.success(user);
     }
 
@@ -82,9 +79,17 @@ public class UserController {
      */
 
    @PutMapping("/updateAvatar")
-    public Result updateAvatar(@RequestParam @URL String avatarUrl) {
-        userService.updateAvatar(avatarUrl);
-        return Result.success();
+    public Result updateAvatar(MultipartFile file) throws Exception {
+       String originalFilename = file.getOriginalFilename();
+
+       //保证文件的名字是唯一的,从而防止文件覆盖
+       String filename = SnowFlakeUtil.getSnowFlakeId() + originalFilename.substring(originalFilename.lastIndexOf("."));
+
+       String url = AliOssUtil.uploadFile(filename, file.getInputStream());
+
+       userService.updateAvatar(url);
+
+       return Result.success(url);
     }
 
 

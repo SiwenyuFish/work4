@@ -13,6 +13,10 @@ import java.util.Map;
 @Repository
 public interface UserMapper {
 
+    @Select("select *from user where id=#{userId}")
+    User findByUserId(Long userId);
+
+
     @Select("select *from user where username=#{username}")
     User findByUserName(String username);
 

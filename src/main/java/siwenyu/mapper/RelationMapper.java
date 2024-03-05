@@ -20,12 +20,12 @@ public interface RelationMapper {
     void actionUnfollow(Long id, Long userId);
 
 
-    @Select("SELECT user.id,user.username,user.avatar_url FROM USER inner join mywebsite.relation r on USER.id = r.user_id where follower_id=#{userId}")
+    @Select("select user.id,user.username,user.avatar_url FROM user inner join relation r on user.id = r.user_id where follower_id=#{userId}")
     List<Friend> list(Long userId);
 
-    @Select("select user.id,user.username,user.avatar_url from user inner join mywebsite.relation r on user.id = r.follower_id where user_id=#{userId}")
+    @Select("select user.id,user.username,user.avatar_url from user inner join relation r on user.id = r.follower_id where user_id=#{userId}")
     List<Friend> fanslist(Long userId);
 
-    @Select("select user.id,user.username,user.avatar_url from user inner join mywebsite.relation r1 on user.id = r1.follower_id inner join relation r2 on r1.user_id=r2.follower_id and r1.follower_id=r2.user_id where r1.user_id=#{userId}")
+    @Select("select user.id,user.username,user.avatar_url from user inner join relation r1 on user.id = r1.follower_id inner join relation r2 on r1.user_id=r2.follower_id and r1.follower_id=r2.user_id where r1.user_id=#{userId}")
     List<Friend> friendslist(Long userId);
 }

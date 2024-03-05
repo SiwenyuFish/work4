@@ -50,4 +50,12 @@ public class UserServiceImpl implements UserService {
         userMapper.updateAvatar(avatarUrl,id);
 
     }
+
+    /**
+     * 通过用户id查询用户
+     */
+    @Override
+    public User findByUserId(Long userId) {
+        return userMapper.findByUserId(userId);
+    }
 }
