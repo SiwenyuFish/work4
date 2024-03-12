@@ -1,5 +1,6 @@
 package siwenyu.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import siwenyu.pojo.Comment;
@@ -19,6 +20,7 @@ public class CommentController {
     /**
      * 评论操作
      */
+    @SaCheckLogin
     @PostMapping("/publish")
     public Result publish(@RequestParam(required = false) Long videoId, @RequestParam(required = false) Long commentId, @RequestParam(required = false) String content){
 
@@ -32,6 +34,7 @@ public class CommentController {
     /**
      *输出评论列表 按视频编号和评论编号查询
      */
+    @SaCheckLogin
     @GetMapping("/list")
     public Result<MyPageBean<Comment>> list(@RequestParam(required = false) Long videoId, @RequestParam(required = false) Long commentId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize) {
         if (videoId == null && commentId == null) {
@@ -49,6 +52,7 @@ public class CommentController {
     /**
      *删除评论 按视频编号和评论编号查询
      */
+    @SaCheckLogin
     @DeleteMapping("/delete")
     public Result delete(@RequestParam(required = false) Long videoId,@RequestParam(required = false) Long commentId){
         if(videoId==null&&commentId==null){

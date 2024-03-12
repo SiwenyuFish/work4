@@ -1,5 +1,6 @@
 package siwenyu.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,6 +34,7 @@ public class RelationController {
     /**
      * 关注操作 关注指定id的用户
      */
+    @SaCheckLogin
     @PostMapping("/relation/action")
     public Result action(Long userId,Integer actionType){
         if(actionType==0){
@@ -84,6 +86,7 @@ public class RelationController {
     /**
      * 查看指定用户的关注列表
      */
+    @SaCheckLogin
     @GetMapping("/following/list")
     public Result followingList(Long userId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
         if(pageNum!=null&&pageSize!=null){
@@ -115,6 +118,7 @@ public class RelationController {
     /**
      * 查看指定用户的粉丝列表
      */
+    @SaCheckLogin
     @GetMapping("/follower/list")
     public Result followerList(Long userId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
         if(pageNum!=null&&pageSize!=null){
@@ -147,6 +151,7 @@ public class RelationController {
      * 查看指定用户的好友列表
      */
 
+    @SaCheckLogin
     @GetMapping("/friends/list")
     public Result friendsList(@RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
         Map<String,Object> map = ThreadLocalUtil.get();

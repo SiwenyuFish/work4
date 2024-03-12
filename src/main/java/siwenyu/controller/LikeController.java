@@ -1,5 +1,6 @@
 package siwenyu.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -38,6 +39,7 @@ public class LikeController {
      * 点赞操作 给视频或者评论点赞
      */
 
+    @SaCheckLogin
     @PostMapping("/action")
     public Result action(@RequestParam(required = false) String videoId, @RequestParam(required = false) String commentId, Integer actionType){
         if(actionType==1){
@@ -167,6 +169,7 @@ public class LikeController {
      * 查看指定用户的点赞列表
      */
 
+    @SaCheckLogin
     @GetMapping("/list")
     public Result<MyPageBean<Video>> list(Long userId, @RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize){
         if(pageNum!=null&&pageSize!=null) {

@@ -1,5 +1,6 @@
 package siwenyu.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -36,6 +37,7 @@ public class VideoController {
      * @param title 视频标题
      * @param description 视频描述
      */
+    @SaCheckLogin
     @PostMapping("/upload")
     public Result<String> upload(MultipartFile file, @RequestParam(required = false) String title, @RequestParam(required = false) String description) throws Exception {
 
@@ -44,7 +46,7 @@ public class VideoController {
         //保证文件的名字是唯一的,从而防止文件覆盖
         String filename = SnowFlakeUtil.getSnowFlakeId() + originalFilename.substring(originalFilename.lastIndexOf("."));
 
-        String url = AliOssUtil.uploadFile(filename, file.getInputStream());
+        String url= AliOssUtil.uploadMultiFile(filename,file);
 
         videoService.upload(url, title, description);
 
@@ -55,6 +57,7 @@ public class VideoController {
      * 查询指定用户投稿的视频
      */
 
+    @SaCheckLogin
     @GetMapping("/list")
     public Result<PageBean<Video>> list(Long userId, Integer pageNum, Integer pageSize) {
         PageBean<Video> pb = videoService.list(userId, pageNum, pageSize);
@@ -67,6 +70,7 @@ public class VideoController {
      * Hash：HashVideo 视频id 视频信息
      * @return 点击量视频信息从高到低排序
      */
+    @SaCheckLogin
     @GetMapping("/popular")
     public Result<List<Video>> popular(@RequestParam(required = false) Integer pageNum, @RequestParam(required = false) Integer pageSize ){
         if(pageNum!=null&&pageSize!=null){
@@ -88,6 +92,7 @@ public class VideoController {
      * @param toDate 最晚视频投稿日期
      * @return 符合查询条件的视频
      */
+    @SaCheckLogin
     @PostMapping("/search")
     public Result<PageBean<Video>> search(String keywords,Integer pageNum,Integer pageSize,
     @RequestParam(required = false) String fromDate,@RequestParam(required = false) String toDate){

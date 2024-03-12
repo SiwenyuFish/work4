@@ -1,5 +1,9 @@
 package siwenyu.controller;
 
+import ch.qos.logback.core.rolling.helper.FileStoreUtil;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaIgnore;
+import cn.dev33.satoken.stp.StpUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +35,7 @@ public class UserController {
      * 用户注册 用户名必须为2-16个字符，密码必须为6-16个字符
      * 用户名唯一
      */
+    @SaIgnore
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{2,16}$") String username, @Pattern(regexp = "^\\S{6,16}$") String password){
         User user=userService.findByUserName(username);
@@ -45,6 +50,7 @@ public class UserController {
     /**
      * 登录 使用JwtUtil获取token
      */
+    @SaIgnore
     @PostMapping("/login")
     public Result<String> login(@Pattern(regexp = "^\\S{2,16}$") String username, @Pattern(regexp = "^\\S{6,16}$") String password) {
         //根据用户名查询用户
@@ -56,6 +62,8 @@ public class UserController {
         //判断密码是否正确  loginUser对象中的password是密文
         if (password.equals(loginUser.getPassword())) {
             //登录成功
+            StpUtil.login(loginUser.getId());
+
             Map<String, Object> claims = new HashMap<>();
             claims.put("id", loginUser.getId());
             claims.put("username", loginUser.getUsername());
@@ -68,6 +76,7 @@ public class UserController {
     /**
      * 输出指定id用户信息
      */
+    @SaCheckLogin
     @GetMapping("/info")
     public Result<User> userInfo(Long userId) {
         User user = userService.findByUserId(userId);
@@ -77,7 +86,7 @@ public class UserController {
     /**
      * 上传用户头像
      */
-
+    @SaCheckLogin
    @PutMapping("/updateAvatar")
     public Result updateAvatar(MultipartFile file) throws Exception {
        String originalFilename = file.getOriginalFilename();

@@ -1,6 +1,7 @@
 package siwenyu.config;
 
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //登录接口和注册接口不拦截
         registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login", "/user/register");
+        registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
     }
 
 }
