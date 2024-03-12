@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class AliOSSUtils {
+public class AliOssUtils {
 
     // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
     private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
