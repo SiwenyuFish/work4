@@ -14,10 +14,10 @@ import java.util.List;
 public interface LikeMapper {
 
     @Insert("insert into `like`(user_id, video_id) VALUES(#{userId},#{id}) ")
-    void actionVideoLike(String id, Long userId);
+    void actionVideoLike(Long id, Long userId);
 
    @Delete("delete from `like` where user_id=#{userId} and video_id=#{id}")
-    void actionVideoDislike(String id, Long userId);
+    void actionVideoDislike(Long id, Long userId);
 
 
    @Select("select id,v.user_id,video_url,cover_url,title,description,visit_count,like_count"+
@@ -26,8 +26,8 @@ public interface LikeMapper {
     List<Video> list(Long userId);
 
    @Insert("insert into `like`(user_id,comment_id)values (#{userId},#{id})")
-    void actionCommentLike(String id, Long userId);
+    void actionCommentLike(Long id, Long userId);
 
    @Delete("delete from `like` where user_id=#{userId} and comment_id=#{id}")
-    void actionCommentDislike(String id, Long userId);
+    void actionCommentDislike(Long id, Long userId);
 }

@@ -8,7 +8,7 @@ public interface LikeService {
     /**
      * 实现给视频点赞的操作 数据保存到like表
      */
-    void videoAction(String id,  Long userId, Integer actionType);
+    void videoAction(Long id, Long userId, Integer actionType);
 
     /**
      * 分页查询指定用户点赞的视频列表
@@ -23,5 +23,5 @@ public interface LikeService {
     /**
      * 实现给评论点赞的操作 数据保存到like表
      */
-    void commentAction(String id, Long userId, Integer actionType);
+    void commentAction(Long id, Long userId, Integer actionType);
 }

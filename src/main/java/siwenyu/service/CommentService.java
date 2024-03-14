@@ -3,6 +3,8 @@ package siwenyu.service;
 import siwenyu.pojo.Comment;
 import siwenyu.pojo.MyPageBean;
 
+import java.util.List;
+
 public interface CommentService {
 
     /**
@@ -28,5 +30,13 @@ public interface CommentService {
     /**
      * 实现给评论点赞的操作 数据更新到comment表
      */
-    void action(String id, Integer actionType);
+    void action(Long id, Integer actionType);
+
+    Comment searchById(Long commentId);
+
+    List<Comment> listComment(Long videoId, Long commentId);
+
+    void updateCount(Long commentId);
+
+    void deleteComment(int count, Long commentId);
 }

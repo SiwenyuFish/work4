@@ -3,8 +3,6 @@ package siwenyu.service;
 import siwenyu.pojo.PageBean;
 import siwenyu.pojo.Video;
 
-import java.util.List;
-
 
 public interface VideoService {
 
@@ -26,10 +24,22 @@ public interface VideoService {
     /**
      * 给视频点赞
      */
-    void action(String id, Integer actionType);
+    void action(Long id, Integer actionType);
 
     /**
      * 给视频取消点赞
      */
-    Video searchById(String id);
+    Video searchById(Long id);
+
+    /**
+     * 通过视频编号给视频评论后更新视频评论数
+     */
+    void publishByVideoId(Long videoId);
+
+    /**
+     * 通过评论编号给视频评论后更新视频评论数
+     */
+    Long publishByCommentId(Long commentId);
+
+    void deleteComment(int count, Long videoId);
 }

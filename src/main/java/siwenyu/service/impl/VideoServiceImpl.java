@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import siwenyu.mapper.CommentMapper;
 import siwenyu.mapper.VideoMapper;
 import siwenyu.pojo.PageBean;
 import siwenyu.pojo.Video;
@@ -22,6 +23,9 @@ public class VideoServiceImpl implements VideoService {
 
     @Autowired
     private VideoMapper videoMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     /**
      * 实现视频上传
@@ -87,7 +91,7 @@ public class VideoServiceImpl implements VideoService {
      * 给视频点赞
      */
     @Override
-    public void action(String id, Integer actionType) {
+    public void action(Long id, Integer actionType) {
         if(actionType==1)
         {
             videoMapper.actionLike(id);
@@ -100,7 +104,24 @@ public class VideoServiceImpl implements VideoService {
      * 给视频取消点赞
      */
     @Override
-    public Video searchById(String id) {
+    public Video searchById(Long id) {
         return videoMapper.searchById(id);
+    }
+
+    @Override
+    public void publishByVideoId(Long videoId) {
+        videoMapper.publishByVideoId(videoId);
+    }
+
+    @Override
+    public Long publishByCommentId(Long commentId) {
+        Long videoId = commentMapper.findByVideoId(commentId);
+        publishByVideoId(videoId);
+        return videoId;
+    }
+
+    @Override
+    public void deleteComment(int count, Long videoId) {
+        videoMapper.deleteComment(count,videoId);
     }
 }

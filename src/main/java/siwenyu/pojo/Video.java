@@ -22,6 +22,7 @@ public class Video implements Serializable {
     private String title;
     private String description;
     private Integer visitCount;
+    private Integer likeCount;
     private Integer commentCount;
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)

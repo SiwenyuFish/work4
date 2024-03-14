@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
      * 实现给评论点赞的操作 数据更新到comment表
      */
     @Override
-    public void action(String id, Integer actionType) {
+    public void action(Long id, Integer actionType) {
         if(actionType==1)
         {
             commentMapper.actionLike(id);
@@ -73,11 +73,31 @@ public class CommentServiceImpl implements CommentService {
         return pp;
     }
 
+    @Override
+    public List<Comment> listComment(Long videoId, Long commentId){
+        return commentMapper.list(videoId,commentId);
+    }
+
     /**
      * 删除指定视频id或者评论id下的评论
      */
     @Override
     public void delete(Long videoId, Long commentId) {
         commentMapper.delete(videoId,commentId);
+    }
+
+    @Override
+    public Comment searchById(Long commentId) {
+        return commentMapper.searchById(commentId);
+    }
+
+    @Override
+    public void updateCount(Long commentId) {
+        commentMapper.updateCount(commentId);
+    }
+
+    @Override
+    public void deleteComment(int count, Long commentId) {
+        commentMapper.deleteComment(count,commentId);
     }
 }

@@ -13,6 +13,8 @@ import siwenyu.pojo.PageBean;
 import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Result;
 import siwenyu.service.RelationService;
+
+import siwenyu.service.UserService;
 import siwenyu.utils.ThreadLocalUtil;
 
 import java.util.Map;
@@ -30,6 +32,9 @@ public class RelationController {
     @Autowired
     private RelationService relationService;
 
+    @Autowired
+    private UserService userService;
+
 
     /**
      * 关注操作 关注指定id的用户
@@ -37,6 +42,10 @@ public class RelationController {
     @SaCheckLogin
     @PostMapping("/relation/action")
     public Result action(Long userId,Integer actionType){
+
+        if(userService.findByUserId(userId)==null)
+            return Result.error("该用户不存在");
+
         if(actionType==0){
             return actionFollow(userId,actionType);
         }else if(actionType==1){

@@ -41,23 +41,37 @@ public class LikeController {
 
     @SaCheckLogin
     @PostMapping("/action")
-    public Result action(@RequestParam(required = false) String videoId, @RequestParam(required = false) String commentId, Integer actionType){
+    public Result action(@RequestParam(required = false) Long videoId, @RequestParam(required = false) Long commentId, Integer actionType){
         if(actionType==1){
-            if(videoId!=null) {
-                return actionVideoLike(videoId, actionType);
-            }
-            if(commentId!=null){
-                return actionCommentLike(commentId,actionType);
+            if(videoId!=null||commentId!=null) {
+                if (videoId != null) {
+                    if (videoService.searchById(videoId) == null)
+                        return Result.error("点赞失败，该视频不存在");
+                    return actionVideoLike(videoId, actionType);
+                }
+                if (commentId != null) {
+                    if (commentService.searchById(commentId) == null)
+                        return Result.error("点赞失败，该评论不存在");
+                    return actionCommentLike(commentId, actionType);
+                }
+                return Result.error("...");
             }
             else {
                 return Result.error("至少有一个参数为非空");
             }
         }else if(actionType==2){
-            if(videoId!=null) {
-                return actionVideoDislike(videoId, actionType);
-            }
-            if(commentId!=null){
-                return actionCommentDislike(commentId,actionType);
+            if(videoId!=null||commentId!=null) {
+                if (videoId != null) {
+                    if (videoService.searchById(videoId) == null)
+                        return Result.error("取消点赞失败，该视频不存在");
+                    return actionVideoDislike(videoId, actionType);
+                }
+                if (commentId != null) {
+                    if (commentService.searchById(commentId) == null)
+                        return Result.error("取消点赞失败，该评论不存在");
+                    return actionCommentDislike(commentId, actionType);
+                }
+                return Result.error("...");
             }
             else {
                 return Result.error("至少有一个参数为非空");
@@ -76,7 +90,7 @@ public class LikeController {
      * 在redis中创建一个名为HashVideo的Hash表 存放视频编号和视频的信息
      */
 
-    public Result actionVideoLike(String id,Integer actionType){
+    public Result actionVideoLike(Long id, Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
         String key=userId+"like:"+id;
@@ -112,7 +126,7 @@ public class LikeController {
      * 否则将点赞信息从redis中删除并更新数据库
      */
 
-    public Result actionVideoDislike(String id,Integer actionType){
+    public Result actionVideoDislike(Long id, Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
         String key=userId+"like:"+id;
@@ -131,7 +145,7 @@ public class LikeController {
      * 先查询redis是否存在点赞信息，如果有，则直接返回不能重复点赞
      * 否则将点赞信息放入redis并更新数据库
      */
-    public Result actionCommentLike(String id,Integer actionType){
+    public Result actionCommentLike(Long id, Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
         String key=userId+"commentLike:"+id;
@@ -151,7 +165,7 @@ public class LikeController {
      * 否则将点赞信息从redis中删除并更新数据库
      */
 
-    public Result actionCommentDislike(String id,Integer actionType){
+    public Result actionCommentDislike(Long id, Integer actionType){
         Map<String,Object> map1 = ThreadLocalUtil.get();
         Long userId = (Long) map1.get("id");
         String key=userId+"commentLike:"+id;

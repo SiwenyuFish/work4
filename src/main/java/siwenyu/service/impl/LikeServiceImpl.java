@@ -21,7 +21,7 @@ public class LikeServiceImpl implements LikeService {
      * 实现给视频点赞的操作 数据保存到like表
      */
     @Override
-    public void videoAction(String id, Long userId, Integer actionType) {
+    public void videoAction(Long id, Long userId, Integer actionType) {
         if(actionType==1){
             likeMapper.actionVideoLike(id,userId);
         }
@@ -35,7 +35,7 @@ public class LikeServiceImpl implements LikeService {
      */
 
     @Override
-    public void commentAction(String id, Long userId, Integer actionType) {
+    public void commentAction(Long id, Long userId, Integer actionType) {
         if(actionType==1){
             likeMapper.actionCommentLike(id,userId);
         }
