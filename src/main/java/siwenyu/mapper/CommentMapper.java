@@ -1,9 +1,6 @@
 package siwenyu.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import siwenyu.pojo.Comment;
 
@@ -39,4 +36,12 @@ public interface CommentMapper {
 
     @Update("update comment set child_count=child_count-#{count} where id =#{commentId}")
     void deleteComment(int count, Long commentId);
+
+    @Select("select comment.id,comment.user_id,comment.video_id,comment.parent_id,comment.like_count,comment.child_count,comment.content,comment.created_at,comment.updated_at,comment.deleted_at from comment where parent_id =#{commentId} ")
+    List<Comment> listChildComment(Long commentId);
+
+    @Delete("delete from comment where parent_id=#{commentId}")
+    void deleteChildComment(Long commentId);
+
+    List<Comment> listComment(Long videoId, Long commentId);
 }

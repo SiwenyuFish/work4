@@ -124,4 +124,10 @@ public class VideoServiceImpl implements VideoService {
     public void deleteComment(int count, Long videoId) {
         videoMapper.deleteComment(count,videoId);
     }
+
+    @Override
+    public Long searchByCommentId(Long commentId) {
+        Long videoId = commentMapper.findByVideoId(commentId);
+        return videoId;
+    }
 }

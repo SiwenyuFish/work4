@@ -17,6 +17,18 @@
         </where>
     </select>
 
+    <select id="listComment" resultType="siwenyu.pojo.Comment">
+        select * from comment
+        <where>
+            <if test="videoId!=null">
+                video_id = #{videoId}
+            </if>
+            <if test="commentId!=null">
+                and id = #{commentId}
+            </if>
+        </where>
+    </select>
+
     <delete id="delete">
         delete from comment
        <where>

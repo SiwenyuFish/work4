@@ -39,4 +39,11 @@ public interface CommentService {
     void updateCount(Long commentId);
 
     void deleteComment(int count, Long commentId);
+
+    List<Comment> listChildComment(Long commentId);
+
+    /**
+     * 删除指定评论的子评论
+     */
+    void delete(Long commentId);
 }

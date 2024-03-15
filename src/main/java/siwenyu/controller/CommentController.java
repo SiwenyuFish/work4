@@ -1,11 +1,15 @@
 package siwenyu.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import siwenyu.pojo.Comment;
 import siwenyu.pojo.MyPageBean;
 import siwenyu.pojo.Result;
+import siwenyu.pojo.Video;
 import siwenyu.service.CommentService;
 import siwenyu.service.VideoService;
 
@@ -14,9 +18,15 @@ import java.util.List;
 /**
  * 评论
  */
+@Slf4j
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate redisTemplate;
+
     @Autowired
     private CommentService commentService;
 
@@ -36,6 +46,10 @@ public class CommentController {
                    return Result.error("评论失败，该视频不存在");
                videoService.publishByVideoId(videoId);
                commentService.publish(videoId,commentId,content);
+
+               //更新redis
+               Video video=videoService.searchById(videoId);
+               redisTemplate.opsForHash().put("HashVideo",videoId,video);
            }
            else {
                if(commentService.searchById(commentId)==null)
@@ -46,7 +60,13 @@ public class CommentController {
                //该评论的子评论+1
                commentService.updateCount(commentId);
 
+               //更新redis
+               Video video=videoService.searchById(id);
+               redisTemplate.opsForHash().put("HashVideo",id,video);
+
            }
+
+
            return Result.success();
        }
         return Result.error("至少有一个参数为非空");
@@ -88,18 +108,35 @@ public class CommentController {
 
         List<Comment> comments = commentService.listComment(videoId, commentId);
         int count=comments.size();
+        log.info("count的值为"+count);
 
-        Long id = videoService.publishByCommentId(commentId);
+        Long id = videoService.searchByCommentId(commentId);
 
-        if(videoId!=null)
-            videoService.deleteComment(count,videoId);
-        if(commentId!=null) {
+        if(videoId!=null&&commentId==null) {
+            videoService.deleteComment(count, videoId);
+            //更新redis
+            Video video=videoService.searchById(videoId);
+            redisTemplate.opsForHash().put("HashVideo",videoId,video);
+        }
+        else {
+            //获取删除评论的子评论
+            List<Comment> comments1 = commentService.listChildComment(commentId);
+            count+=comments1.size();
+            log.info("count的值为"+count);
+            //删除子评论
+            commentService.delete(commentId);
+
+            //更新视频表和评论表的数据
             videoService.deleteComment(count, id);
             commentService.deleteComment(count,commentId);
+
+            //更新redis
+            Video video=videoService.searchById(id);
+            redisTemplate.opsForHash().put("HashVideo",id,video);
         }
 
+        //删除符合条件的评论
         commentService.delete(videoId,commentId);
-
 
         return Result.success();
     }

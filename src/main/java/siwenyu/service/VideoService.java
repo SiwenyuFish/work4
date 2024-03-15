@@ -42,4 +42,6 @@ public interface VideoService {
     Long publishByCommentId(Long commentId);
 
     void deleteComment(int count, Long videoId);
+
+    Long searchByCommentId(Long commentId);
 }

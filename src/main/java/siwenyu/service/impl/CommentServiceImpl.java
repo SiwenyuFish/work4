@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> listComment(Long videoId, Long commentId){
-        return commentMapper.list(videoId,commentId);
+        return commentMapper.listComment(videoId,commentId);
     }
 
     /**
@@ -99,5 +99,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(int count, Long commentId) {
         commentMapper.deleteComment(count,commentId);
+    }
+
+    @Override
+    public List<Comment> listChildComment(Long commentId) {
+        return commentMapper.listChildComment(commentId);
+    }
+
+    @Override
+    public void delete(Long commentId) {
+        commentMapper.deleteChildComment(commentId);
     }
 }
